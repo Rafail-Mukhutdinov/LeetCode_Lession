@@ -21,6 +21,10 @@ int removeDuplicates(std::vector<int> &nums)
 // ------------------------------------------------------------------------------------
 int eraseValues(std::vector<int> &nums, const int number)
 {
+    if (nums.size() == 0){
+        return number;
+    }
+    
     for (std::vector<int>::iterator it = nums.begin() + number; it != nums.end();)
     {
         it = nums.erase(it);
@@ -49,9 +53,11 @@ void Print(std::vector<int> &num)
 // -------------------------------------------------------------------------------------
 int main(int, char **)
 {
+    std::vector<int> nums0{}; 
     std::vector<int> nums1{1, 1, 2};
     std::vector<int> nums2{0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
 
+    Print(nums0);
     Print(nums1);
     Print(nums2);
 }

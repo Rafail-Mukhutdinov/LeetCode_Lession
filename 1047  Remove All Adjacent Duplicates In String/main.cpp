@@ -14,8 +14,7 @@ std::string removeDuplicates(std::string s)
     return text;
 }
 
-int main(int, char **)
-{
+int main(int, char **){
     std::cout << removeDuplicates("abbaca") << std::endl;
     std::cout << removeDuplicates("azxxzy") << std::endl;
 }

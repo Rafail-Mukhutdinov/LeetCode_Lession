@@ -5,14 +5,18 @@ int maximumWealth(std::vector<std::vector<int>> &accounts)
 {
     int sum = 0;
     int sum1 = 0;
+    
     if (accounts.empty() != 0)
     {
         return 0;
     }
 
-    for (int i = 0; i < accounts.size(); i++)
+    int size1 = accounts.size();
+    int size2 = accounts[0].size();
+    
+    for (int i = 0; i < size1; i++)
     {
-        for (int j = 0; j < accounts[i].size(); j++)
+        for (int j = 0; j < size2; j++)
         {
             sum += accounts[i][j];
         }

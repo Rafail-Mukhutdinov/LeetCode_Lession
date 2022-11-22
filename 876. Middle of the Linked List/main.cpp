@@ -1,29 +1,35 @@
 #include <iostream>
-
 #include "src/listnode.h"
 
-// Definition for singly-linked list.
-/* struct ListNode
+void Push_Back(ListNode<int>& list, int rt[], int size){
+    for (int i = 0; i < size; i++){
+        list.push_back(rt[i]);
+    }
+
+}
+
+/* 
+ListNode* middleNode(ListNode* head)
 {
-    int val;
-    ListNode *next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
-}; */
+    ListNode *slow = head;
+    ListNode *fast = head;
+    while (fast != NULL && fast->next != NULL)
+    {
+      slow = slow->next;
+      fast = fast->next->next;
 
-
-//ListNode* middleNode(ListNode* head) {
-
-//}
-
+    }
+    
+    return slow;
+} */
 
 int main()
 {
-   ListNode<int> lst;
-   lst.push_back(5);
-   lst.push_back(10);
-   lst.push_back(22);
+    int number0[5] = {1, 2, 3, 4, 5};
+    int number1[6] = {1,2,3,4,5,6};
 
-   std::cout << "Sum 2 arr = " << lst[5];
+   // ListNode *lst;
+
+
 }
+

@@ -9,10 +9,16 @@ public:
     ~ListNode();
 
     void push_back(T data);
+    void push_front(T data);
+    void pop_front();
+    void pop_back();
+    void insert(T data, int index);
+    void removeAt(int index);
+    void clear();
 
     int GetSize() { return Size; }
 
-    T & operator[](const int index);
+    T &operator[](const int index);
 
 private:
     template <typename T1>
@@ -41,6 +47,80 @@ ListNode<T>::ListNode()
 template <typename T>
 ListNode<T>::~ListNode()
 {
+    clear();
+}
+
+
+template <typename T>
+void ListNode<T>::pop_back(){
+    removeAt(Size - 1);
+}
+
+template <typename T>
+void ListNode<T>::insert(T data, int index)
+{
+    if (index == 0)
+    {
+        push_front(data);
+    }
+    else
+    {
+        Node<T> *previous = this->head;
+
+        for (int i = 0; i < index - 1; i++)
+        {
+            previous = previous->pNext;
+        }
+        Node<T> *newNode = new Node<T> (data, previous->pNext);
+        previous->pNext = newNode;
+
+        Size++;
+    }
+}
+
+template <typename T>
+void ListNode<T>::removeAt(int index){
+    if(index == 0){
+        pop_front();
+    }else{
+        Node<T> *previous = this->head;
+        for (int i = 0; i < index - 1; i++)
+        {
+            previous = previous->pNext;
+        }
+        Node<T> *toDelete = previous->pNext;
+        previous->pNext = toDelete->pNext;
+        delete toDelete;
+        Size--;
+        
+    }
+}
+
+
+
+template <typename T>
+void ListNode<T>::push_front(T data)
+{
+    head = new Node<T>(data, head);
+    Size++;
+}
+
+template <typename T>
+void ListNode<T>::clear()
+{
+    while (Size)
+    {
+        pop_front();
+    }
+}
+
+template <typename T>
+void ListNode<T>::pop_front()
+{
+    Node<T> *temp = head;
+    head = head->pNext;
+    delete temp;
+    Size--;
 }
 
 template <typename T>
@@ -63,7 +143,7 @@ void ListNode<T>::push_back(T data)
 }
 
 template <typename T>
-T & ListNode<T>::operator[](const int index)
+T &ListNode<T>::operator[](const int index)
 {
     int counter = 0;
     Node<T> *current = this->head;

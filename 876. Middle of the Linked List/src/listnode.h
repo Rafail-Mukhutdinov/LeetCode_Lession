@@ -1,160 +1,135 @@
 #pragma once
 
-template <typename T>
-class ListNode
+class Node
 {
-
 public:
-    ListNode();
-    ~ListNode();
+    int data;
+    Node *next;
 
-    void push_back(T data);
-    void push_front(T data);
-    void pop_front();
-    void pop_back();
-    void insert(T data, int index);
-    void removeAt(int index);
-    void clear();
-
-    int GetSize() { return Size; }
-
-    T &operator[](const int index);
-
-private:
-    template <typename T1>
-    class Node
+    Node(int data)
     {
-    public:
-        Node *pNext;
-        T1 data;
-
-        Node(T1 data = T1(), Node *pNext = nullptr)
-        {
-            this->data = data;
-            this->pNext = pNext;
-        }
-    };
-    int Size;
-    Node<T> *head;
+        this->data = data;
+        this->next = nullptr;
+    }
 };
 
-template <typename T>
-ListNode<T>::ListNode()
+class ListNode
 {
-    Size = 0;
-    head = nullptr;
-}
-template <typename T>
-ListNode<T>::~ListNode()
+public:
+    Node *head, *tail;
+    void pop_front();
+    void push_back(int data);
+    void push_front(int data);
+    void pop_back();
+    Node *getAt(int k);
+    void insert(int k, int data);
+    void erase(int k);
+
+    ListNode();
+    ~ListNode();
+};
+
+ListNode::ListNode()
 {
-    clear();
+    this->head = this->tail = nullptr;
 }
 
-
-template <typename T>
-void ListNode<T>::pop_back(){
-    removeAt(Size - 1);
-}
-
-template <typename T>
-void ListNode<T>::insert(T data, int index)
+ListNode::~ListNode()
 {
-    if (index == 0)
-    {
-        push_front(data);
-    }
-    else
-    {
-        Node<T> *previous = this->head;
-
-        for (int i = 0; i < index - 1; i++)
-        {
-            previous = previous->pNext;
-        }
-        Node<T> *newNode = new Node<T> (data, previous->pNext);
-        previous->pNext = newNode;
-
-        Size++;
-    }
-}
-
-template <typename T>
-void ListNode<T>::removeAt(int index){
-    if(index == 0){
+    while (head != nullptr)
         pop_front();
-    }else{
-        Node<T> *previous = this->head;
-        for (int i = 0; i < index - 1; i++)
-        {
-            previous = previous->pNext;
-        }
-        Node<T> *toDelete = previous->pNext;
-        previous->pNext = toDelete->pNext;
-        delete toDelete;
-        Size--;
-        
-    }
 }
 
-
-
-template <typename T>
-void ListNode<T>::push_front(T data)
-{
-    head = new Node<T>(data, head);
-    Size++;
-}
-
-template <typename T>
-void ListNode<T>::clear()
-{
-    while (Size)
-    {
+void ListNode::erase(int k){
+    if(k < 0) return;
+    if(k == 0){
         pop_front();
+        return;
     }
+    Node* left = getAt(k - 1);
+    Node* node = left->next;
+    if(node == nullptr) return;
+    Node* right = node->next;
+    left->next = right;
+    if(node == tail) tail = left;
+    delete node;
 }
 
-template <typename T>
-void ListNode<T>::pop_front()
+void ListNode::insert(int k, int data)
 {
-    Node<T> *temp = head;
-    head = head->pNext;
-    delete temp;
-    Size--;
+    Node *left = getAt(k);
+    if (left == nullptr)
+        return;
+    Node *right = left->next;
+    Node *node = new Node(data);
+    left->next = node;
+    node->next = right;
+    if (right == nullptr)
+        tail = node;
 }
 
-template <typename T>
-void ListNode<T>::push_back(T data)
+Node *ListNode::getAt(int k)
+{
+    if (k < 0)
+        return nullptr;
+    Node *node = head;
+    int n = 0;
+    while (node && n != k && node->next)
+    {
+        node = node->next;
+        n++;
+    }
+    return (n == k) ? node : nullptr;
+}
+
+void ListNode::pop_back()
+{
+    if (tail == nullptr)
+        return;
+    if (head == tail)
+    {
+        delete tail;
+        head = tail = nullptr;
+        return;
+    }
+    Node *node = head;
+    for (; node->next != tail; node = node->next)
+        ;
+    node->next = nullptr;
+    delete tail;
+    tail = node;
+}
+
+void ListNode::push_front(int data)
+{
+    Node *node = new Node(data);
+    node->next = head;
+    head = node;
+    if (tail == nullptr)
+        tail = node;
+}
+
+void ListNode::push_back(int data)
+{
+    Node *node = new Node(data);
+    if (head == nullptr)
+        head = node;
+    if (tail != nullptr)
+        tail->next = node;
+    tail = node;
+}
+
+void ListNode::pop_front()
 {
     if (head == nullptr)
+        return;
+    if (head == tail)
     {
-        head = new Node<T>(data);
+        delete tail;
+        head = tail = nullptr;
+        return;
     }
-    else
-    {
-        Node<T> *current = this->head;
-        while (current->pNext != nullptr)
-        {
-            current = current->pNext;
-        }
-        current->pNext = new Node<T>(data);
-    }
-    Size++;
-}
-
-template <typename T>
-T &ListNode<T>::operator[](const int index)
-{
-    int counter = 0;
-    Node<T> *current = this->head;
-    while (current != nullptr)
-    {
-        if (counter == index)
-        {
-            return current->data;
-        }
-        current = current->pNext;
-        counter++;
-    }
-    return current->data;
+    Node *node = head;
+    head = node->next;
+    delete node;
 }

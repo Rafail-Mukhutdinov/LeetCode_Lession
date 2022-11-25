@@ -1,69 +1,82 @@
 #include <iostream>
-//#include "src/listnode.h"
+#include <vector>
 
 struct ListNode
 {
-    int val;
-    ListNode *head, *tail;
-    ListNode() : val(0), head(nullptr), tail(nullptr) { std::cout << "Конструктор без параметров" << std::endl; }
+	int val;
+	ListNode *next;
+	ListNode() : val(0), next(nullptr) {}
+	ListNode(int x) : val(x), next(nullptr) {}
+	ListNode(int x, ListNode *next) : val(x), next(next) {}
+	~ListNode()
+	{
+		delete next;
+	}
 
-    ListNode(int data)
-    {
-        this->val = data;
-        this->head = nullptr;
-    }
-
-    ListNode(int data[], int size)
-    {
-        std::cout << "Конструктор с одним параметром параметров" << std::endl;
-
-        for (int i = 0; i < size; i++)
-        {
-            ListNode *node = new ListNode(data[i]);
-
-            if (head == nullptr)
-                head = node;
-            if (tail != nullptr)
-                tail->tail = node;
-            tail = node;
-            std::cout << "Распечатаем массив " << data[i] << std::endl;
-        }
-    }
+	void Push_Back(const std::vector<int> &num)
+	{
+		for (const auto &item : num)
+		{
+			if (next == nullptr)
+			{
+				next = new ListNode(item);
+			}
+			else
+			{
+				ListNode *current = this->next;
+				while (current->next != nullptr)
+				{
+					current = current->next;
+				}
+				current->next = new ListNode(item);
+			}
+		}
+	}
 };
-/*
+
 ListNode *middleNode(ListNode *head)
 {
-    ListNode *slow = head->next;
-    ListNode *fast = head->next;
-    while (fast != nullptr && fast->next != nullptr)
-    {
-        slow = slow->next;
-        fast = fast->next->next;
-    }
-
-    return slow;
+	ListNode *slow = head;
+	ListNode *fast = head;
+	while (fast != nullptr && fast->next != nullptr)
+	{
+		slow = slow->next;
+		fast = fast->next->next;
+	}
+	return slow;
 }
- */
+
+void Print(ListNode *head)
+{
+	std::cout << "Output: [";
+	for (ListNode *node = head; node != nullptr; node = node->next)
+	{
+		std::cout << node->val;
+		if (node->next != nullptr)
+		{
+			std::cout << ", ";
+		}
+	}
+	std::cout << "]" << std::endl;
+}
+
 int main()
 {
-    int number0[5] = {1, 5, 5, 5, 5};
-    int number1[6] = {1, 2, 3, 4, 5, 6};
+	system("chcp 65001 && cls");
+	{
+		std::vector<int> number0{1, 2, 3, 4, 5}; // Output: [3,4,5]
+		ListNode lst;
+		lst.Push_Back(number0);
+		Print(middleNode(lst.next));
+		std::cout << std::endl;
+	}
 
-    ListNode lst(number0, 5);
-    ListNode *test = new ListNode();
-    for(int i = 0; i < 5; i++){
-    std::cout << "Пытаюсь вывести связаный список " << test = lst.head<< std::endl;
-    }
-    // middleNode(&lst);
+	{
+		std::vector<int> number1{1, 2, 3, 4, 5, 6}; // Output: [4,5,6]
+		ListNode lst;
+		lst.Push_Back(number1);
+		Print(middleNode(lst.next));
+		std::cout << std::endl;
+	}
+	return 0;
 }
-
-/*     ListNode *slow = head;
-    ListNode *fast = head;
-    while (fast != NULL && fast->next != NULL)
-    {
-      slow = slow->next;
-      fast = fast->next->next;
-
-    }
-
-    return slow; */

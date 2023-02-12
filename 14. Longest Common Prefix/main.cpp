@@ -1,9 +1,27 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 std::string longestCommonPrefix(std::vector<std::string> &strs)
 {
+     std::string outText = ""; 
+     std::sort(strs.begin(), strs.end()); 
+     std::string firstStr = strs[0];
+     std::string lastStr = strs[strs.size()-1]; 
+        for(int i = 0; i < firstStr.size(); i++)
+        {
+           if(firstStr[i] == lastStr[i])
+           {
+             outText += firstStr[i];
+           }
+            else 
+             break;
+        }
+       return outText;
+
+    /*
+    Простой способ
     std::string minText;
     int count = 0;
     int size = strs.size();
@@ -27,12 +45,14 @@ std::string longestCommonPrefix(std::vector<std::string> &strs)
         count++;
     }
     return minText.substr(0, count);
+    */
 }
 
 void Print(const std::vector<std::string> &strs, const std::string &prefix)
 {
     int size = strs.size();
     std::cout << "Input: strs = [";
+    if(strs.empty()) std::cout << "\"\"]" << std::endl;
     for (auto const &item : strs)
     {
         if (--size > 0)
@@ -58,6 +78,11 @@ int main(int, char **)
 
     {
         std::vector<std::string> strs = {"dog", "racecar", "car"};
+        Print(strs, longestCommonPrefix(strs));
+    }
+
+    {
+        std::vector<std::string> strs = {"a"} ;
         Print(strs, longestCommonPrefix(strs));
     }
 }

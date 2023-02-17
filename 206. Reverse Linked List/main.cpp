@@ -33,7 +33,7 @@ struct ListNode
 ListNode *reverseList(ListNode *head)
 {
 
-    ListNode *prev = NULL;
+    ListNode *prev = nullptr;
     ListNode *curr = head;
     while (curr)
     {

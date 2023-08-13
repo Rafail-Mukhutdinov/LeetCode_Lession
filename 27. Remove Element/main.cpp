@@ -35,5 +35,4 @@ int main(int, char**){
     int sum = removeElement(val_arr, val);
 }
 
-
 }

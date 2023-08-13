@@ -46,9 +46,9 @@ int romanToInt(std::string s)
 */
 
 void Print(const std::string_view text, const int value)
-{
+{    
     std::cout << "Input: s = "
-              << "\"" << *(&text) << "\"" << std::endl;
+              << "\"" << text << "\"" << std::endl;
     std::cout << "Output: " << value << std::endl;
 }
 

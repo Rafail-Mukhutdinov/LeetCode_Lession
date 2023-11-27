@@ -60,7 +60,6 @@ void Print(std::vector<int> &num, int target)
 
 int main(int, char **)
 {
-
     std::vector<int> num0{2, 7, 11, 15}; // = 9
     std::vector<int> num1{3, 2, 4};      // = 6
     std::vector<int> num2{3, 3};         // = 6

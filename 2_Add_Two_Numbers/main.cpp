@@ -55,6 +55,7 @@ void Print(ListNode* head){
 	std::cout << "]" << std::endl;
 }
 
+
 int main() {
   system("chcp 65001 && cls");
 

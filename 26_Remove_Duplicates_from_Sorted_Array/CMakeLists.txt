@@ -1,0 +1,3 @@
+project(26_Remove_Duplicates_from_Sorted_Array)
+add_executable(26_Remove_Duplicates_from_Sorted_Array main.cpp)
+
